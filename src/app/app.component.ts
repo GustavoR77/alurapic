@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'alurapic';
-  description = 'Leão';
-  url = 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Scorpion_Photograph_By_Shantanu_Kuveskar.jpg';
+
+  photos: Object[] = [];
+
+  constructor(http: HttpClient) {
+
+    http
+      .get<Object[]>('http://localhost:3000/flavio/photos')
+      .subscribe(photos => this.photos = photos)
+        //err => console.log(err.message)
+  }
 }
